@@ -30,7 +30,7 @@ class TestCalculadoraImpuestos(unittest.TestCase):
         impuesto_esperado= 20_853_633.5
         self.assertAlmostEqual(impuesto_calculado, impuesto_esperado, 2)
         
-
+    
 
 if __name__ == 'main':
     unittest.main()
