@@ -1,3 +1,5 @@
+
+
 def calcular_impuestos(ingresos_anuales: float, deducciones: float, pension: float, salud: float, dependientes: int, vivienda_propia: bool) -> float:
     valor_uvt= 52374
     renta_pesos= renta_gravable(ingresos_anuales, deducciones, pension, salud)
@@ -25,4 +27,4 @@ def renta_gravable(ingresos_anuales: float, deducciones: float, pension: float, 
 def renta_gravable_uvt(renta_gravable: float) -> float:
     #Pasar la renta gravable a UVT (2026)
     valor_uvt= 52374
-    return renta_gravable / valor_uvt
+    return  round(renta_gravable / valor_uvt, 2)
