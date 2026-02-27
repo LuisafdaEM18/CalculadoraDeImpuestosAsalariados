@@ -11,7 +11,7 @@ try:
     print("1. Si tiene vivienda propia")
     print("2. Si no tiene vivienda propia")
     vivienda_propia= int(input("Opcion: ")) 
-    renta_liquida_gravable= float(input("Renta liquida: "))
+    renta_liquida_gravable= float(input("Renta liquida : "))
     
 except Exception as err: 
     print("No se pudo calcular")
