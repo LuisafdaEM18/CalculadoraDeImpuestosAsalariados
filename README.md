@@ -6,40 +6,79 @@ Calculadora de Impuestos Colombia 2026 – Casos de Prueba
 - Jerónimo Roldán Cardona
 
 📥 Entradas
-La función recibe 7 parámetros:
-ParámetroTipoDescripcióningresos_anualesfloatIngresos brutos totales del año en COPdeduccionesfloatDeducciones generales permitidas en COPpensionfloatAportes obligatorios a pensión del año en COPsaludfloatAportes obligatorios a salud del año en COPdependientesintNúmero de personas a cargo (máximo 4 aplican)vivienda_propiaboolTrue si tiene crédito hipotecario activo, False si nointereses_viviendafloatIntereses pagados en el año por crédito hipotecario en COP
+La función calcular_impuestos() recibe los siguientes parámetros:
 
+ingresos_anuales (float) — Ingresos brutos totales del año en COP
+deducciones (float) — Deducciones generales permitidas en COP
+pension (float) — Aportes obligatorios a pensión del año en COP
+salud (float) — Aportes obligatorios a salud del año en COP
+dependientes (int) — Número de personas a cargo (máximo 4 aplican)
+vivienda_propia (bool) — True si tiene crédito hipotecario activo, False si no
+intereses_vivienda (float) — Intereses pagados en el año por crédito hipotecario en COP
 ⚙️ Proceso de Cálculo
-El cálculo se divide en 3 etapas:
-1. Calcular la Renta Gravable en pesos
-Se parte de los ingresos y se hacen los siguientes descuentos en orden:
-Renta exenta: 25% de los ingresos, con tope de 790 UVT (~$41.3M COP).
-Seguridad social: Los aportes a pensión y salud se descuentan en su totalidad, sin límite.
-Deducciones especiales: Se suman las siguientes deducciones y se aplican con un límite conjunto:
-DeducciónTopeDeducciones generalesSin tope individual10% de los ingresosMáx. 384 UVT72 UVT por dependienteMáx. 4 dependientes (288 UVT)Intereses de viviendaMáx. 1.200 UVT (solo si vivienda_propia = True)
+El cálculo se realiza en tres etapas a través de funciones auxiliares:
+Etapa 1 — renta_gravable(): Base gravable en pesos
+Se parte de los ingresos brutos y se aplican los siguientes descuentos:
+1. Renta exenta
+El 25% de los ingresos está exento de impuesto por ley, con un tope máximo de 790 UVT (~$41.3M COP en 2026).
+2. Seguridad social
+Los aportes a pensión y salud se descuentan en su totalidad, sin ningún límite.
+3. Deducciones especiales
+Se acumulan las siguientes deducciones:
 
-⚠️ El total de deducciones especiales no puede superar el 40% de los ingresos ni 1.340 UVT — se aplica el menor de los dos.
+Deducciones generales ingresadas directamente
+10% de los ingresos (máx. 384 UVT)
+72 UVT por cada dependiente (máx. 4 dependientes = 288 UVT)
+Intereses de crédito hipotecario (máx. 1.200 UVT, solo si vivienda_propia = True)
+Etapa 2 — renta_gravable_uvt(): Conversión a UVT
+La renta gravable en pesos se convierte a Unidades de Valor Tributario para poder ubicarla en la tabla de tarifas
+ El valor de la UVT para 2026 es $52.374 COP, según resolución de la DIAN.
+Etapa 3 — calcular_impuestos(): Tabla de tarifas progresivas
+Con la renta en UVT se determina el tramo correspondiente y se calcula el impuesto. La tarifa es progresiva: solo la porción de renta que supera el límite inferior de cada tramo tributa a esa tarifa.
 
-2. Convertir a UVT
-Renta en UVT = Renta Gravable / 52.374
-El valor de la UVT para 2026 es $52.374 COP.
-3. Aplicar la tabla de tarifas progresivas
-Renta Gravable (UVT)TarifaFórmula0 — 1.0900%$01.090 — 1.70019%(renta - 1.090) × 19% × UVT1.700 — 4.10028%(116 + (renta - 1.700) × 28%) × UVT4.100 — 8.67033%(788 + (renta - 4.100) × 33%) × UVT8.670 — 18.97035%(2.296 + (renta - 8.670) × 35%) × UVT18.970 — 31.00037%(5.901 + (renta - 18.970) × 37%) × UVT> 31.00039%(10.352 + (renta - 31.000) × 39%) × UVT
-Solo la porción de renta que supera el límite inferior de cada tramo se grava a esa tarifa.
-
+Hasta 1.090 UVT → 0% — no es contribuyente
+De 1.090 a 1.700 UVT → 19%
+De 1.700 a 4.100 UVT → 28%
+De 4.100 a 8.670 UVT → 33%
+De 8.670 a 18.970 UVT → 35%
+De 18.970 a 31.000 UVT → 37%
+Más de 31.000 UVT → 39%
 📤 Salida
 La función retorna un único valor:
-VariableTipoDescripciónimpuestofloatImpuesto de renta a pagar en COP, redondeado
 
-Si la renta gravable es ≤ 1.090 UVT, el impuesto retornado es $0 (no es contribuyente).
+impuesto (float) — Impuesto de renta a pagar en COP, redondeado al peso más cercano
 
+❌ Validaciones y Manejo de Errores
+Antes de realizar cualquier cálculo, la función valida que los datos sean coherentes. Si algún valor es inválido, se lanza una excepción ValueError con un mensaje descriptivo:
 
-❌ Validaciones
-La función lanza ValueError con mensaje descriptivo si alguna entrada es inválida:
-CasoMensajeingresos_anuales < 0"Los ingresos no pueden ser negativos"deducciones > ingresos_anuales"Las deducciones no pueden superar los ingresos totales"dependientes < 0"El número de dependientes debe ser mayor o igual a cero"pension < 0"Los aportes a pensión no pueden ser negativos"intereses_vivienda < 0"Los intereses de vivienda no pueden ser negativos"
+Ingresos negativos → "Los ingresos no pueden ser negativos"
+Deducciones mayores a los ingresos → "Las deducciones no pueden superar los ingresos totales"
+Dependientes negativos → "El número de dependientes debe ser mayor o igual a cero"
+Aportes a pensión negativos → "Los aportes a pensión no pueden ser negativos"
+Intereses de vivienda negativos → "Los intereses de vivienda no pueden ser negativos"
+🧪 Casos de Prueba
+Los casos de prueba están documentados en el archivo casos_prueba.xlsx e incluyen tres categorías:
+Casos Normales — situaciones típicas de contribuyentes con diferentes perfiles:
 
-📋 Casos de Prueba
-Casos Normales
-CasoIngresosDeduccionesPensiónSaludDep.ViviendaInteresesNormal 1$80.000.000$10.000.000$6.400.000$3.200.0002✅$5.000.000Normal 2$150.000.000$20.000.000$12.000.000$6.000.0001❌$0Normal 3$200.000.000$15.000.000$10.000.000$5.000.0000✅$2.000.000
-Casos Extraordinarios
-CasoIngresosDeduccionesPensiónSaludDep.ViviendaInteresesExtraordinario 1$600.000.000$60.000.000$48.000.000$24.000.0004✅$25.000.000Extraordinario 2$15.000.000$0$1.200.000$600.0000❌$0Extraordinario 3$1.200.000.000$0$0$00❌$0
+Normal 1: $80M ingresos, $10M deducciones, 2 dependientes, con crédito hipotecario ($5M intereses)
+Normal 2: $150M ingresos, $20M deducciones, 1 dependiente, sin vivienda propia
+Normal 3: $200M ingresos, $15M deducciones, sin dependientes, con crédito hipotecario ($2M intereses)
+
+Casos Extraordinarios — ingresos muy altos o muy bajos para verificar los límites del sistema:
+
+Extraordinario 1: $600M ingresos, 4 dependientes, máximas deducciones aplicables
+Extraordinario 2: $15M ingresos, sin deducciones (por debajo del umbral mínimo)
+Extraordinario 3: $1.200M ingresos, sin ninguna deducción (caso límite máximo de tarifa)
+
+Casos de Error — entradas inválidas para verificar que las validaciones funcionen correctamente:
+
+Ingresos negativos, deducciones excesivas, dependientes negativos, aportes negativos e intereses negativos
+ Constantes del Sistema
+
+UVT 2026: $52.374 COP
+Renta exenta: 25% de los ingresos, tope 790 UVT
+Deducción por gastos: 10% de los ingresos, tope 384 UVT
+Deducción por dependiente: 72 UVT por persona, máximo 4 (288 UVT)
+Deducción por intereses de vivienda: máximo 1.200 UVT
+Límite total de deducciones especiales: 40% de ingresos o 1.340 UVT (el menor)
+Seguridad social: sin límite de deducción
