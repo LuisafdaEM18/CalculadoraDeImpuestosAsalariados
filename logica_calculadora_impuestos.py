@@ -13,15 +13,15 @@ class ErrorInteresVivienda(Exception):
 def calcular_impuestos(ingresos_anuales: float, deducciones: float, pension: float, salud: float, dependientes: int, vivienda_propia: bool, intereses_vivienda: float = 0) -> float:
     # Validaciones
     if ingresos_anuales < 0:
-        raise ErrorIngresos("ERROR: Los ingresos no pueden ser negativos")
+        raise ErrorIngresos(f"ERROR: Los ingresos anuales no pueden ser negativos: {ingresos_anuales}$")
     if deducciones > ingresos_anuales:
-        raise ErrorTopesDeducciones("ERROR: Las deducciones no pueden superar los ingresos totales")
+        raise ErrorTopesDeducciones(f"ERROR: Las deducciones: {deducciones}$  no pueden superar los ingresos totales: {ingresos_anuales}$")
     if dependientes < 0:
-        raise ErrorDependientes("ERROR: El número de dependientes debe ser mayor o igual a cero")
+        raise ErrorDependientes(f"ERROR: El número de dependientes: {dependientes} debe ser mayor o igual a cero")
     if pension < 0:
-        raise ErrorPension("ERROR: Los aportes a pensión no pueden ser negativos")
+        raise ErrorPension(f"ERROR: Los aportes a pensión: {pension}$ no pueden ser negativos")
     if intereses_vivienda < 0:
-        raise ErrorInteresVivienda("ERROR: Los intereses de vivienda no pueden ser negativos")
+        raise ErrorInteresVivienda(f"ERROR: Los intereses de vivienda: {intereses_vivienda}$ no pueden ser negativos")
 
     valor_uvt = 52374
     renta_pesos = renta_gravable(ingresos_anuales, deducciones, pension, salud, dependientes, vivienda_propia, intereses_vivienda)
