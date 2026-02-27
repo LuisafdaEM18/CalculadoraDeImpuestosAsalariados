@@ -31,6 +31,19 @@ class TestCalculadoraImpuestos(unittest.TestCase):
         #Salida
         impuesto_esperado= 0
         self.assertAlmostEqual(impuesto_calculado, impuesto_esperado)
+
+    def test_extraordinario_3(self):
+        ingresos_anuales = 1_200_000_000
+        deducciones = 0
+        pension = 0
+        salud = 0
+        dependientes = 0
+        vivienda_propia = False
+        interes_vivienda = 0
+        impuesto_calculado = logica_calculadora_impuestos.calcular_impuestos(
+            ingresos_anuales, deducciones, pension, salud, dependientes, vivienda_propia, interes_vivienda)
+        impuesto_esperado = 362_700_849
+        self.assertAlmostEqual(impuesto_calculado, impuesto_esperado)
         
     
 
