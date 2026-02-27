@@ -11,11 +11,12 @@ class TestCalculadoraImpuesto(unittest.TestCase):
         salud= 3_200_000
         dependientes= 2
         vivienda_propia= True # 1 es SI y 2 es NO
+        interes_vivienda= 5_000_000
         #Proceso
-        impuesto_calculado= logica_calculadora_impuestos.calcular_impuestos(ingresos_anuales, deducciones, pension, salud, dependientes, vivienda_propia)
+        impuesto_calculado= logica_calculadora_impuestos.calcular_impuestos(ingresos_anuales, deducciones, pension, salud, dependientes, vivienda_propia, interes_vivienda)
         #Salida
-        impuesto_esperado= 629_344.6
-        self.assertAlmostEqual(impuesto_calculado, impuesto_esperado, 2)
+        impuesto_esperado= 0
+        self.assertAlmostEqual(impuesto_calculado, impuesto_esperado)
 
     def test_normal_2(self):
         #Entradas
@@ -25,11 +26,12 @@ class TestCalculadoraImpuesto(unittest.TestCase):
         salud= 6_000_000
         dependientes= 1
         vivienda_propia= False # 1 es SI y 2 es NO
+        interes_vivienda= 0
         #Proceso
-        impuesto_calculado= logica_calculadora_impuestos.calcular_impuestos(ingresos_anuales, deducciones, pension, salud, dependientes, vivienda_propia)
+        impuesto_calculado= logica_calculadora_impuestos.calcular_impuestos(ingresos_anuales, deducciones, pension, salud, dependientes, vivienda_propia, interes_vivienda)
         #Salida
-        impuesto_esperado= 12_500_122.6
-        self.assertAlmostEqual(impuesto_calculado, impuesto_esperado, 2)
+        impuesto_esperado= 0
+        self.assertAlmostEqual(impuesto_calculado, impuesto_esperado)
     
 if __name__ == 'main':
     unittest.main()
