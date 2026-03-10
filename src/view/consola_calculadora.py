@@ -1,4 +1,8 @@
-import logica_calculadora_impuestos
+import sys
+import os
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..'))
+
+from model import logica_calculadora_impuestos
 
 def main():
     print("Bienvenido al programa que le ayuda a calcular la cantidad de impuestos a pagar")
