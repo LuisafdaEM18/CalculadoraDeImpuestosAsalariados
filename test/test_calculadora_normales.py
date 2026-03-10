@@ -1,5 +1,8 @@
-import logica_calculadora_impuestos
 import unittest
+import sys
+sys.path.append('src')
+
+from model import logica_calculadora_impuestos
 
 class TestCalculadoraImpuesto(unittest.TestCase):
 

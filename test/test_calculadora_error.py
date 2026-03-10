@@ -1,6 +1,11 @@
 import unittest
-import logica_calculadora_impuestos
-#Casos extraordinarios
+
+import sys
+sys.path.append('src')
+
+from model import logica_calculadora_impuestos
+
+
 class TestCalculadoraImpuestos(unittest.TestCase): 
     def test_ingresos_negativos( self ):
         #Entradas
