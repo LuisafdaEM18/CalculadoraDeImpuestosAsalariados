@@ -5,6 +5,19 @@ Calculadora de Impuestos Colombia 2026 – Casos de Prueba
 - Juan Pablo Arango Correa
 - Jerónimo Roldán Cardona
 
+¿Qué es y para qué es?
+
+Esta aplicación calcula el impuesto de renta que debe pagar un trabajador asalariado en Colombia para el año gravable 2026, siguiendo las tarifas y reglas establecidas por la DIAN.
+A partir de los ingresos del usuario y sus deducciones aplicables (seguridad social, dependientes, crédito hipotecario, entre otras), la calculadora determina la renta gravable en UVT y aplica la tabla de tarifas progresivas vigente para 2026.
+
+¿Cómo lo hago funcionar?
+
+Antes de ejecutar la aplicación, es necesario que se ejecuten las pruebas unitarias para asegurar que este funcione correctamente, además de que estas pruebas crean las tablas de base de datos necesarias para la aplicación.
+También es recomendable instalar todas las dependencias necesarias para que la aplicación funcione correctamente. Esto lo puede hacer con el siguiente comando:
+Comando para ejecutar: 
+
+src/view/consola_calculadora.py
+
 📥 Entradas
 La función calcular_impuestos() recibe los siguientes parámetros:
 
