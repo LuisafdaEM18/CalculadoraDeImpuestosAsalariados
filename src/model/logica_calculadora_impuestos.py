@@ -20,7 +20,7 @@ class ErrorSalud(Exception):
 
 
 def validar_parametros_entrada(ingresos_anuales: float, deducciones: float, pension: float, salud: float, dependientes: int, intereses_vivienda: float) -> None:
-    """Valida los parámetros de entrada para el cálculo de impuestos."""
+    #Valida los parámetros de entrada para el cálculo de impuestos.
     if ingresos_anuales < 0:
         raise ErrorIngresos(f"ERROR: Los ingresos anuales no pueden ser negativos: {ingresos_anuales}$")
     if deducciones > ingresos_anuales:
@@ -36,9 +36,9 @@ def validar_parametros_entrada(ingresos_anuales: float, deducciones: float, pens
 
 
 def calcular_impuesto_renta(ingresos_anuales: float, deducciones_generales: float, aporte_pension: float, aporte_salud: float, numero_dependientes: int, tiene_vivienda_propia: bool, intereses_credito_vivienda: float = 0) -> float:
-    """
-    Calcula el impuesto de renta a pagar según los parámetros de entrada.
-    """
+    
+    #Calcula el impuesto de renta a pagar según los parámetros de entrada.
+    
     validar_parametros_entrada(ingresos_anuales, deducciones_generales, aporte_pension, aporte_salud, numero_dependientes, intereses_credito_vivienda)
 
     valor_uvt = 52374
@@ -71,9 +71,6 @@ def calcular_impuesto_renta(ingresos_anuales: float, deducciones_generales: floa
 
 
 def calcular_base_gravable_pesos(ingresos_anuales: float, deducciones_generales: float, aporte_pension: float, aporte_salud: float, numero_dependientes: int, tiene_vivienda_propia: bool, intereses_credito_vivienda: float = 0) -> float:
-    """
-    Calcula la base gravable en pesos a partir de los parámetros de entrada.
-    """
     valor_uvt = 52374
 
     # Renta exenta: 25% de ingresos, máximo 790 UVT
@@ -92,8 +89,5 @@ def calcular_base_gravable_pesos(ingresos_anuales: float, deducciones_generales:
 
 
 def convertir_pesos_a_uvt(base_gravable_pesos: float) -> float:
-    """
-    Convierte la base gravable en pesos a UVT (2026).
-    """
-    valor_uvt = 52374
+    valor_uvt = 52374 
     return round(base_gravable_pesos / valor_uvt, 2)
