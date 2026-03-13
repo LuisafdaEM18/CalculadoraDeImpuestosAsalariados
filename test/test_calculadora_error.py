@@ -6,70 +6,72 @@ sys.path.append('src')
 from model import logica_calculadora_impuestos
 
 
-class TestCalculadoraImpuestos(unittest.TestCase): 
-    def test_ingresos_negativos( self ):
-        #Entradas
+
+class TestErroresCalculoImpuestos(unittest.TestCase):
+    def test_error_ingresos_negativos(self):
         ingresos_anuales = -50_000_000
-        deducciones = 5_000_000
-        pension = 4_000_000
-        salud = 2_000_000
-        dependientes = 1 
-        vivienda_propia = True
-        interes_vivienda= 3_000_000
-        
+        deducciones_generales = 5_000_000
+        aporte_pension = 4_000_000
+        aporte_salud = 2_000_000
+        numero_dependientes = 1
+        tiene_vivienda_propia = True
+        intereses_credito_vivienda = 3_000_000
         with self.assertRaises(logica_calculadora_impuestos.ErrorIngresos):
-            impuesto_esperado= logica_calculadora_impuestos.calcular_impuestos(ingresos_anuales,deducciones,pension,salud,dependientes,vivienda_propia, interes_vivienda)
+            logica_calculadora_impuestos.calcular_impuesto_renta(
+                ingresos_anuales, deducciones_generales, aporte_pension, aporte_salud,
+                numero_dependientes, tiene_vivienda_propia, intereses_credito_vivienda)
 
-    def test_deducciones_excesivas( self ):
-        #Entradas
+    def test_error_deducciones_excesivas(self):
         ingresos_anuales = 50_000_000
-        deducciones = 60_000_000
-        pension = 4_000_000
-        salud = 2_000_000
-        dependientes = 1 
-        vivienda_propia = False
-        interes_vivienda= 0
-        
+        deducciones_generales = 60_000_000
+        aporte_pension = 4_000_000
+        aporte_salud = 2_000_000
+        numero_dependientes = 1
+        tiene_vivienda_propia = False
+        intereses_credito_vivienda = 0
         with self.assertRaises(logica_calculadora_impuestos.ErrorTopesDeducciones):
-            impuesto_esperado= logica_calculadora_impuestos.calcular_impuestos(ingresos_anuales,deducciones,pension,salud,dependientes,vivienda_propia, interes_vivienda)   
-    
-    def test_dependientes_negativos( self ):
-        #Entradas
+            logica_calculadora_impuestos.calcular_impuesto_renta(
+                ingresos_anuales, deducciones_generales, aporte_pension, aporte_salud,
+                numero_dependientes, tiene_vivienda_propia, intereses_credito_vivienda)
+
+    def test_error_dependientes_negativos(self):
         ingresos_anuales = 80_000_000
-        deducciones = 10_000_000
-        pension = 6_400_000
-        salud = 3_200_000
-        dependientes = -2
-        vivienda_propia = True
-        interes_vivienda= 5_000_000
-        
+        deducciones_generales = 10_000_000
+        aporte_pension = 6_400_000
+        aporte_salud = 3_200_000
+        numero_dependientes = -2
+        tiene_vivienda_propia = True
+        intereses_credito_vivienda = 5_000_000
         with self.assertRaises(logica_calculadora_impuestos.ErrorDependientes):
-            impuesto_esperado= logica_calculadora_impuestos.calcular_impuestos(ingresos_anuales,deducciones,pension,salud,dependientes,vivienda_propia, interes_vivienda) 
+            logica_calculadora_impuestos.calcular_impuesto_renta(
+                ingresos_anuales, deducciones_generales, aporte_pension, aporte_salud,
+                numero_dependientes, tiene_vivienda_propia, intereses_credito_vivienda)
 
-    def test_aportes_negativos( self ):
-        #Entradas
+    def test_error_aporte_pension_negativo(self):
         ingresos_anuales = 100_000_000
-        deducciones = 15_000_000
-        pension = -8_000_000
-        salud = 4_000_000
-        dependientes = 2
-        vivienda_propia = True
-        interes_vivienda= 6_000_000
-        
+        deducciones_generales = 15_000_000
+        aporte_pension = -8_000_000
+        aporte_salud = 4_000_000
+        numero_dependientes = 2
+        tiene_vivienda_propia = True
+        intereses_credito_vivienda = 6_000_000
         with self.assertRaises(logica_calculadora_impuestos.ErrorPension):
-            impuesto_esperado= logica_calculadora_impuestos.calcular_impuestos(ingresos_anuales,deducciones,pension,salud,dependientes,vivienda_propia, interes_vivienda) 
+            logica_calculadora_impuestos.calcular_impuesto_renta(
+                ingresos_anuales, deducciones_generales, aporte_pension, aporte_salud,
+                numero_dependientes, tiene_vivienda_propia, intereses_credito_vivienda)
 
-    def test_interes_negativos( self ):
-        #Entradas
+    def test_error_intereses_vivienda_negativos(self):
         ingresos_anuales = 90_000_000
-        deducciones = 12_000_000
-        pension = 7_200_000
-        salud = 3_600_000
-        dependientes = 1
-        vivienda_propia = True
-        interes_vivienda= -3_000_000
-        
+        deducciones_generales = 12_000_000
+        aporte_pension = 7_200_000
+        aporte_salud = 3_600_000
+        numero_dependientes = 1
+        tiene_vivienda_propia = True
+        intereses_credito_vivienda = -3_000_000
         with self.assertRaises(logica_calculadora_impuestos.ErrorInteresVivienda):
-            impuesto_esperado= logica_calculadora_impuestos.calcular_impuestos(ingresos_anuales,deducciones,pension,salud,dependientes,vivienda_propia, interes_vivienda) 
-if __name__ == 'main':
+            logica_calculadora_impuestos.calcular_impuesto_renta(
+                ingresos_anuales, deducciones_generales, aporte_pension, aporte_salud,
+                numero_dependientes, tiene_vivienda_propia, intereses_credito_vivienda)
+
+if __name__ == '__main__':
     unittest.main()
