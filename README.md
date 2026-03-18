@@ -5,12 +5,12 @@ Calculadora de Impuestos Colombia 2026 – Casos de Prueba
 - Juan Pablo Arango Correa
 - Jerónimo Roldán Cardona
 
-¿Qué es y para qué es?
+**¿Qué es y para qué es?**
 
 Esta aplicación calcula el impuesto de renta que debe pagar un trabajador asalariado en Colombia para el año gravable 2026, siguiendo las tarifas y reglas establecidas por la DIAN.
 A partir de los ingresos del usuario y sus deducciones aplicables (seguridad social, dependientes, crédito hipotecario, entre otras), la calculadora determina la renta gravable en UVT y aplica la tabla de tarifas progresivas vigente para 2026.
 
-¿Cómo lo hago funcionar?
+**¿Cómo lo hago funcionar?**
 
 Antes de ejecutar la aplicación, es necesario que se ejecuten las pruebas unitarias para asegurar que este funcione correctamente, además de que estas pruebas crean las tablas de base de datos necesarias para la aplicación.
 También es recomendable instalar todas las dependencias necesarias para que la aplicación funcione correctamente. Esto lo puede hacer con el siguiente comando:
@@ -18,7 +18,31 @@ Comando para ejecutar:
 
 src/view/consola_calculadora.py
 
-📥 Entradas
+**Descripción de la arquitectura**
+
+El orden de nuestras carpetas esta de la siguiente manera: 
+📦 proyecto/
+├──📁 docs/  # Documentación del proyecto
+│  ├──casos_prueba_impuestos_2.xlsx
+├── 📁 src/
+│   ├── 📁 controller/       # Coordinación entre modelo y vista
+│   ├── 📁 model/
+│   │   ├── __init__.py
+│   │   └── logica_calculadora_impuestos.py  # Reglas de negocio y cálculos
+│   └── 📁 view/
+│       └── consola_calculadora.py           # Interfaz con el usuario (consola)
+├── 📁 test/    # Pruebas unitarias
+    ├──test_calculadora_error.py
+    ├──test_calculadora_extraordinarios.py
+    └──test_calculadora_normales.py
+
+**Como ejecutar las pruebas unitarias** 
+Utiliza el siguiente comando en la consola:
+python -m unittest discover -s test
+
+Al ejecutarse debe de aparecerte todas las pruebas como "ok"
+
+**📥 Entradas**
 La función calcular_impuestos() recibe los siguientes parámetros:
 
 ingresos_anuales (float) — Ingresos brutos totales del año en COP
@@ -28,7 +52,8 @@ salud (float) — Aportes obligatorios a salud del año en COP
 dependientes (int) — Número de personas a cargo (máximo 4 aplican)
 vivienda_propia (bool) — True si tiene crédito hipotecario activo, False si no
 intereses_vivienda (float) — Intereses pagados en el año por crédito hipotecario en COP
-⚙️ Proceso de Cálculo
+
+**⚙️ Proceso de Cálculo**
 El cálculo se realiza en tres etapas a través de funciones auxiliares:
 Etapa 1 — renta_gravable(): Base gravable en pesos
 Se parte de los ingresos brutos y se aplican los siguientes descuentos:
@@ -61,7 +86,7 @@ La función retorna un único valor:
 
 impuesto (float) — Impuesto de renta a pagar en COP, redondeado al peso más cercano
 
-❌ Validaciones y Manejo de Errores
+**❌ Validaciones y Manejo de Errores**
 Antes de realizar cualquier cálculo, la función valida que los datos sean coherentes. Si algún valor es inválido, se lanza una excepción ValueError con un mensaje descriptivo:
 
 Ingresos negativos → "Los ingresos no pueden ser negativos"
@@ -69,7 +94,8 @@ Deducciones mayores a los ingresos → "Las deducciones no pueden superar los in
 Dependientes negativos → "El número de dependientes debe ser mayor o igual a cero"
 Aportes a pensión negativos → "Los aportes a pensión no pueden ser negativos"
 Intereses de vivienda negativos → "Los intereses de vivienda no pueden ser negativos"
-🧪 Casos de Prueba
+
+**🧪 Casos de Prueba**
 Los casos de prueba están documentados en el archivo casos_prueba.xlsx e incluyen tres categorías:
 Casos Normales — situaciones típicas de contribuyentes con diferentes perfiles:
 
