@@ -21,28 +21,41 @@ src/view/consola_calculadora.py
 **Descripción de la arquitectura**
 
 El orden de nuestras carpetas esta de la siguiente manera: 
+
 📦 proyecto/
+
 ├──📁 docs/  # Documentación del proyecto
+
 │  ├──casos_prueba_impuestos_2.xlsx
+
 ├── 📁 src/
+
 │   ├── 📁 controller/       # Coordinación entre modelo y vista
+
 │   ├── 📁 model/
+
 │   │   ├── __init__.py
+
 │   │   └── logica_calculadora_impuestos.py  # Reglas de negocio y cálculos
+
 │   └── 📁 view/
 │       └── consola_calculadora.py           # Interfaz con el usuario (consola)
+
 ├── 📁 test/    # Pruebas unitarias
     ├──test_calculadora_error.py
     ├──test_calculadora_extraordinarios.py
     └──test_calculadora_normales.py
 
 **Como ejecutar las pruebas unitarias** 
+
 Utiliza el siguiente comando en la consola:
+
 python -m unittest discover -s test
 
 Al ejecutarse debe de aparecerte todas las pruebas como "ok"
 
 **📥 Entradas**
+
 La función calcular_impuestos() recibe los siguientes parámetros:
 
 ingresos_anuales (float) — Ingresos brutos totales del año en COP
@@ -54,6 +67,7 @@ vivienda_propia (bool) — True si tiene crédito hipotecario activo, False si n
 intereses_vivienda (float) — Intereses pagados en el año por crédito hipotecario en COP
 
 **⚙️ Proceso de Cálculo**
+
 El cálculo se realiza en tres etapas a través de funciones auxiliares:
 Etapa 1 — renta_gravable(): Base gravable en pesos
 Se parte de los ingresos brutos y se aplican los siguientes descuentos:
@@ -87,6 +101,7 @@ La función retorna un único valor:
 impuesto (float) — Impuesto de renta a pagar en COP, redondeado al peso más cercano
 
 **❌ Validaciones y Manejo de Errores**
+
 Antes de realizar cualquier cálculo, la función valida que los datos sean coherentes. Si algún valor es inválido, se lanza una excepción ValueError con un mensaje descriptivo:
 
 Ingresos negativos → "Los ingresos no pueden ser negativos"
@@ -96,6 +111,7 @@ Aportes a pensión negativos → "Los aportes a pensión no pueden ser negativos
 Intereses de vivienda negativos → "Los intereses de vivienda no pueden ser negativos"
 
 **🧪 Casos de Prueba**
+
 Los casos de prueba están documentados en el archivo casos_prueba.xlsx e incluyen tres categorías:
 Casos Normales — situaciones típicas de contribuyentes con diferentes perfiles:
 
