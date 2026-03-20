@@ -29,7 +29,7 @@ class TestErroresCalculoImpuestos(unittest.TestCase):
         tiene_vivienda_propia = False
         intereses_credito_vivienda = 0
         variables_impuestos= logica_calculadora_impuestos.Variables_impuestos(ingresos_anuales, deducciones_generales,aporte_pension,aporte_salud,numero_dependientes,tiene_vivienda_propia,intereses_credito_vivienda )
-        with self.assertRaises(logica_calculadora_impuestos.ErrorIngresos):
+        with self.assertRaises(logica_calculadora_impuestos.ErrorTopesDeducciones):
             logica_calculadora_impuestos.Calcular_impuesto.calcular_impuesto_renta(variables_impuestos)
 
     def test_error_dependientes_negativos(self):
@@ -41,7 +41,7 @@ class TestErroresCalculoImpuestos(unittest.TestCase):
         tiene_vivienda_propia = True
         intereses_credito_vivienda = 5_000_000
         variables_impuestos= logica_calculadora_impuestos.Variables_impuestos(ingresos_anuales, deducciones_generales,aporte_pension,aporte_salud,numero_dependientes,tiene_vivienda_propia,intereses_credito_vivienda )
-        with self.assertRaises(logica_calculadora_impuestos.ErrorIngresos):
+        with self.assertRaises(logica_calculadora_impuestos.ErrorDependientes):
             logica_calculadora_impuestos.Calcular_impuesto.calcular_impuesto_renta(variables_impuestos)
 
     def test_error_aporte_pension_negativo(self):
@@ -53,7 +53,7 @@ class TestErroresCalculoImpuestos(unittest.TestCase):
         tiene_vivienda_propia = True
         intereses_credito_vivienda = 6_000_000
         variables_impuestos= logica_calculadora_impuestos.Variables_impuestos(ingresos_anuales, deducciones_generales,aporte_pension,aporte_salud,numero_dependientes,tiene_vivienda_propia,intereses_credito_vivienda )
-        with self.assertRaises(logica_calculadora_impuestos.ErrorIngresos):
+        with self.assertRaises(logica_calculadora_impuestos.ErrorPension):
             logica_calculadora_impuestos.Calcular_impuesto.calcular_impuesto_renta(variables_impuestos)
 
     def test_error_intereses_vivienda_negativos(self):
@@ -65,7 +65,7 @@ class TestErroresCalculoImpuestos(unittest.TestCase):
         tiene_vivienda_propia = True
         intereses_credito_vivienda = -3_000_000
         variables_impuestos= logica_calculadora_impuestos.Variables_impuestos(ingresos_anuales, deducciones_generales,aporte_pension,aporte_salud,numero_dependientes,tiene_vivienda_propia,intereses_credito_vivienda )
-        with self.assertRaises(logica_calculadora_impuestos.ErrorIngresos):
+        with self.assertRaises(logica_calculadora_impuestos.ErrorInteresVivienda):
             logica_calculadora_impuestos.Calcular_impuesto.calcular_impuesto_renta(variables_impuestos)
 
 if __name__ == '__main__':

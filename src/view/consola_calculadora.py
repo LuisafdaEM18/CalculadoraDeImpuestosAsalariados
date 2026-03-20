@@ -18,7 +18,7 @@ def solicitar_datos_usuario():
     print("2. No tiene vivienda propia")
     opcion_vivienda = int(input("Opción (1/2): "))
     tiene_vivienda_propia = opcion_vivienda == 1
-    intereses_credito_vivienda = float(input("Intereses de la vivienda: "))
+    intereses_credito_vivienda = float(input("Intereses de la vivienda: ")) if tiene_vivienda_propia else 0
     return (ingresos_anuales, deducciones_generales, aporte_pension, aporte_salud, numero_dependientes, tiene_vivienda_propia, intereses_credito_vivienda)
 
 def mostrar_resultado(impuesto_calculado: float):
