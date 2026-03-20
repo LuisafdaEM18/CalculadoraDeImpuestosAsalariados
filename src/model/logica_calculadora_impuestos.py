@@ -52,11 +52,11 @@ class ValidarVariables:
 
 class CalcularImpuesto:
 
-    def calcular_impuesto_renta(variables_impuestos: Variables_impuestos) -> float:
+    def calcular_impuesto_renta(variables_impuestos: VariablesImpuestos) -> float:
         
         #Calcula el impuesto de renta a pagar según los parámetros de entrada.
         
-        Validar_variables.validar_parametros_entrada(variables_impuestos)
+        ValidarVariables.validar_parametros_entrada(variables_impuestos)
 
         unidad_uvt = valor_uvt()
         base_gravable_pesos = calcular_base_gravable_pesos(variables_impuestos)
