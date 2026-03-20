@@ -46,7 +46,7 @@ class Validar_variables:
 
 class Calcular_impuesto:
 
-    def calcular_impuesto_renta(variables_impuestos = Variables_impuestos) -> float:
+    def calcular_impuesto_renta(variables_impuestos: Variables_impuestos) -> float:
         
         #Calcula el impuesto de renta a pagar según los parámetros de entrada.
         

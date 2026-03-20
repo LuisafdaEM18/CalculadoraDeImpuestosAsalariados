@@ -27,7 +27,9 @@ def mostrar_resultado(impuesto_calculado: float):
 def main():
     try:
         datos = solicitar_datos_usuario()
-        impuesto = logica_calculadora_impuestos.Variables_impuestos(*datos)
+        variables= logica_calculadora_impuestos.Variables_impuestos(*datos)
+        logica_calculadora_impuestos.Validar_variables.validar_parametros_entrada(variables)
+        impuesto= logica_calculadora_impuestos.Calcular_impuesto.calcular_impuesto_renta(variables)
         mostrar_resultado(impuesto)
     except Exception as error:
         print("No se pudo calcular. ", error)
