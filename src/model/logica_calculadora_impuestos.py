@@ -1,23 +1,29 @@
 
 class ErrorIngresos(Exception):
     """Los ingresos anuales deben ser mayores o iguales a cero."""
-
+    def __init__(self, ingresos): 
+        super().__init__(f"Sus {ingresos} no son mayores iguales ") 
 class ErrorTopesDeducciones(Exception):
     """Las deducciones no pueden ser mayores a los ingresos anuales."""
-
+    def __init__(self, deducciones, ingresos):
+        super().__init__(f"ERROR: Las deducciones: {deducciones}$ no pueden superar los ingresos totales: {ingresos}$") 
 class ErrorDependientes(Exception):
     """El número de dependientes debe ser mayor o igual a cero."""
-
+    def __init__(self, dependientes):
+        super().__init__(f"ERROR: El número de dependientes: {dependientes} debe ser mayor o igual a cero") 
 class ErrorPension(Exception):
     """La pensión debe ser mayor o igual a cero."""
-
+    def __init__(self, pension):
+        super().__init__(f"ERROR: Los aportes a pensión: {pension}$ no pueden ser negativos") 
 class ErrorInteresVivienda(Exception):
     """Los intereses de vivienda deben ser mayores o iguales a cero."""
-
+    def __init__(self, intereses):
+        super().__init__(f"ERROR: Los intereses de vivienda: {intereses}$ no pueden ser negativos") 
 class ErrorSalud(Exception):
-    """La pensión debe ser mayor o igual a cero."""
-    
-class Variables_impuestos:
+    """Los aportes a salud deben ser mayores o iguales a cero."""
+    def __init__(self, salud):
+        super().__init__(f"ERROR: Aportes a salud: {salud}$ no pueden ser negativos") 
+class VariablesImpuestos:
     def __init__(self,ingresos_anuales: float, deducciones: float, pension: float, salud: float, dependientes: int, tiene_vivienda_propia: int,intereses_vivienda: float):
         self.ingresos_anuales = ingresos_anuales
         self.deducciones = deducciones
@@ -27,24 +33,24 @@ class Variables_impuestos:
         self.tiene_vivienda_propia = tiene_vivienda_propia
         self.intereses_vivienda = intereses_vivienda
 
-class Validar_variables:
+class ValidarVariables:
 
     def validar_parametros_entrada(variables_impuestos) -> None:
         #Valida los parámetros de entrada para el cálculo de impuestos.
         if variables_impuestos.ingresos_anuales < 0:
             raise ErrorIngresos(f"ERROR: Los ingresos anuales no pueden ser negativos: {variables_impuestos.ingresos_anuales}$")
         if variables_impuestos.deducciones > variables_impuestos.ingresos_anuales:
-            raise ErrorTopesDeducciones(f"ERROR: Las deducciones: {variables_impuestos.deducciones}$ no pueden superar los ingresos totales: {variables_impuestos.ingresos_anuales}$")
+            raise ErrorTopesDeducciones(variables_impuestos.deducciones, variables_impuestos.ingresos_anuales)
         if variables_impuestos.dependientes < 0:
-            raise ErrorDependientes(f"ERROR: El número de dependientes: {variables_impuestos.dependientes} debe ser mayor o igual a cero")
+            raise ErrorDependientes(variables_impuestos.dependientes)
         if variables_impuestos.pension < 0:
-            raise ErrorPension(f"ERROR: Los aportes a pensión: {variables_impuestos.pension}$ no pueden ser negativos")
+            raise ErrorPension(variables_impuestos.pension)
         if variables_impuestos.intereses_vivienda < 0:
-            raise ErrorInteresVivienda(f"ERROR: Los intereses de vivienda: {variables_impuestos.intereses_vivienda}$ no pueden ser negativos")
+            raise ErrorInteresVivienda(variables_impuestos.intereses_vivienda)
         if variables_impuestos.salud < 0:
-            raise ErrorSalud(f"ERROR: Aportes a salud: {variables_impuestos.salud}$ no pueden ser negativos")
+            raise ErrorSalud(variables_impuestos.salud)
 
-class Calcular_impuesto:
+class CalcularImpuesto:
 
     def calcular_impuesto_renta(variables_impuestos: Variables_impuestos) -> float:
         
@@ -74,7 +80,7 @@ class Calcular_impuesto:
 def valor_uvt():
     return 52374 #Valor actual en pesos de una UVT en 2026
 
-def calcular_base_gravable_pesos(variables_impuestos: Variables_impuestos) -> float:
+def calcular_base_gravable_pesos(variables_impuestos: VariablesImpuestos) -> float:
     unidad_uvt = valor_uvt()
 
     # Renta exenta: 25% de ingresos, máximo 790 UVT
