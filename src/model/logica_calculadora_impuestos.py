@@ -88,7 +88,7 @@ def calcular_base_gravable_pesos(variables_impuestos: Variables_impuestos) -> fl
     limite_deducciones_especiales = min(variables_impuestos.ingresos_anuales * 0.4, 1340 * unidad_uvt)
     total_deducciones_especiales = min(total_deducciones_especiales, limite_deducciones_especiales)
 
-    return max(0, variables_impuestos.ingresos_anuales - renta_exenta - (variables_impuestos.aporte_pension + variables_impuestos.aporte_salud) - total_deducciones_especiales)
+    return max(0, variables_impuestos.ingresos_anuales - renta_exenta - (variables_impuestos.pension + variables_impuestos.salud) - total_deducciones_especiales)
 
 
 
