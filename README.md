@@ -8,6 +8,8 @@ Calculadora de Impuestos Colombia 2026 – Casos de Prueba
 
   - luisa Fernanda
   - Jose angel Sanchez Martinez 
+
+
 **¿Qué es y para qué es?**
 
 Esta aplicación calcula el impuesto de renta que debe pagar un trabajador asalariado en Colombia para el año gravable 2026, siguiendo las tarifas y reglas establecidas por la DIAN.
