@@ -5,7 +5,7 @@ Calculadora de Impuestos Colombia 2026 – Casos de Prueba
 - Juan Pablo Arango Correa
 - Jerónimo Roldán Cardona
 
-  **Nuevo Participantes
+  Nuevo Participantes
 
   - luisa Fernanda
   - Jose angel Sanchez Martinez 
